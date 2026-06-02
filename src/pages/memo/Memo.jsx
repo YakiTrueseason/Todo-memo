@@ -1,18 +1,25 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import './Memo.css';
+import { ScheduleContext } from '../../conponents/ScheduleContext';
 
 function Memo() {
-    const [notes, setNotes] = useState([]);
+    //読み込み　起動
+    const [notes, setNotes] = useState(()=>{
+        const saved = localStorage.getItem("notes");
+        return saved ? JSON.parse(saved) : [];
+    });
     const [selectedNote, setSelectedNote] = useState(null);
     const [editedText, setEditedText] = useState("");
+    const { selectedDate } = useContext(ScheduleContext);
 
     const handleNoteAdd = () => {
         // 新しいオブジェクトの追加
         const newNote = {
             id: Date.now(),
+            date:selectedDate,
             // 下の画像はメモと入力してから変換
             text: "新規ノート📝"
-        }
+        };
         setNotes([...notes, newNote]);
         setSelectedNote(newNote);
         setEditedText(newNote.text);
@@ -42,17 +49,27 @@ function Memo() {
             }
             return note;
         });
-        console.log(updatedNotes);
         setNotes(updatedNotes);
     }
+    //保存
+    useEffect(()=>{
+        localStorage.setItem(
+            "notes",JSON.stringify(notes)
+        );
+    },[notes]);
     return (
         <div className="app-container">
             {/* sidebar */}
             <div className='sidebar'>
+                <h3>選択中の日付：{selectedDate}</h3>
                 <h1>メモ</h1>
                 <button id='create' onClick={handleNoteAdd}>ノート追加</button>
                 <ul>
-                    {notes.map((note) => (
+                    {notes
+                    .filter(
+                        (note)=>note.date === selectedDate
+                    )
+                    .map((note) => (
                         <li key={note.id} className={selectedNote?.id === note.id ? "selected" : ""}>
                             <button onClick={() => handleDelete(note.id)} className='delete'>削除</button>
                             <span onClick={() => handleSelect(note)}>{note.text}</span>

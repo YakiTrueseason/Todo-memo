@@ -6,7 +6,8 @@ function Calendar() {
     const{selectedDate,setSelectedDate} = useContext(ScheduleContext);
 
 return (
-    <div>
+    <div> 
+        {/* 日付選択 */}
         <input type="date"
         value={selectedDate}
         onChange={(e)=>
