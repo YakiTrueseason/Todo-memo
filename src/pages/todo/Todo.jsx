@@ -1,18 +1,29 @@
-import { useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import './App.css';
 import TodoList from './TodoList';
 import { v4 as uuidv4 } from 'uuid';
+import { ScheduleContext } from '../../conponents/ScheduleContext';
 
 function Todo() {
-    const [todos, setTodos] = useState([]);
+    const {selectedDate} = useContext(ScheduleContext);
+    //読み込み　起動
+    const [todos, setTodos] = useState(()=>{
+        const saved = localStorage.getItem("todos");
+        return saved ? JSON.parse(saved) : [];
+    });
     const todoNameRef = useRef();
     const handleAddTodo = () => {
         // タスク追加
-        // console.log(todoNameRef.current.value);
         const name = todoNameRef.current.value;
         if (name === "") return;
         setTodos((prevTodos) => {
-            return [...prevTodos, { id: uuidv4(), name: name, completed: false }];
+            //保存データ
+            return [...prevTodos, { 
+                id: uuidv4(),
+                date:selectedDate,
+                name: name,
+                completed: false 
+            }];
         });
         todoNameRef.current.value = null;
     };
@@ -26,15 +37,34 @@ function Todo() {
         const newTodos = todos.filter((todo) => !todo.completed);
         setTodos(newTodos);
     };
+    //保存処理
+    useEffect(()=>{
+        localStorage.setItem(
+            "todos",
+            JSON.stringify(todos)
+        );
+    },[todos]);
     return (
         <div className="App">
-            <TodoList todos={todos} toggleTodo={toggleTodo} />
+            <h3>選択中の日付：{selectedDate}</h3>
+            <TodoList todos={
+                todos.filter(
+                    (todo)=>
+                        todo.date === selectedDate
+                )
+                }
+                toggleTodo={toggleTodo}
+            />
             <h1>やるべきこと</h1>
             <input type='text' className='inputText' ref={todoNameRef} />
             <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
             <button className='Button' onClick={handleClear}>完了したタスクの削除</button>
             <div>
-                残りのタスク:{todos.filter((todo) => !todo.completed).length}
+                残りのタスク:{todos.filter((todo) =>
+                    todo.date === selectedDate &&
+                    !todo.completed
+                    ).length
+                    }
             </div>
         </div>
     );
