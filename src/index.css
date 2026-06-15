@@ -21,6 +21,6 @@ code {
 /* ダークモード */
 .dark{
   background: #1e1e1e;
-  color: aqua;
+  color: white;
   --caed-bg:#333;
 }

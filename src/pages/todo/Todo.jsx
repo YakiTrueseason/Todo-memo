@@ -1,15 +1,14 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import './Todo.css';
 import TodoList from './TodoList';
 import { v4 as uuidv4 } from 'uuid';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
+// import { data } from 'react-router-dom';
 
 function Todo() {
     const {selectedDate} = useContext(ScheduleContext);
     //検索
     const [searchText,setSearchText] = useState("");
-    //登録用タグ
-    const [selectedTag,setSelectedTag] = useState("勉強");
     //絞り込み用タグ
     const [filterTag,setFilterTag] = useState("すべて");
     //完了・未完了
@@ -19,26 +18,6 @@ function Todo() {
         const saved = localStorage.getItem("todos");
         return saved ? JSON.parse(saved) : [];
     });
-    //優先度
-    const [priority,setPriority] = useState("中");
-    const todoNameRef = useRef();
-    const handleAddTodo = () => {
-    // タスク追加
-        const name = todoNameRef.current.value;
-        if (name === "") return;
-        setTodos((prevTodos) => {
-    //保存データ
-            return [...prevTodos, { 
-                id: uuidv4(),
-                date:selectedDate,
-                name: name,
-                tag:selectedTag,
-                priority:priority,
-                completed: false 
-            }];
-        });
-        todoNameRef.current.value = null;
-    };
     const toggleTodo = (id) => {
         const newTodos = [...todos];
         const todo = newTodos.find((todo) => todo.id === id);
@@ -127,21 +106,57 @@ function Todo() {
             )
         }
     );
+    //新規モーダル
+    const [modalMode,setModalMode] = useState("add");
+    const [currentTodo,setCurrentTodo] = useState({
+        name:"",
+        tag:"その他",
+        priority:"中"
+    });
+    const [isModalOpen,setIsModalOpen] = useState(false);
+    //追加ボタン
+    const handleOpenAddModal = () =>{
+        setCurrentTodo({
+            name:"",
+            tag:"その他",
+            priority:"中"
+        })
+        setModalMode("add")
+        setIsModalOpen(true);
+    }
+    // 編集ボタン
+    const handleOpenModal = (todo) =>{
+        setCurrentTodo(todo);
+        setModalMode("edit");
+        setIsModalOpen(true);
+    }
+    // 保存、追加、編集
+    const handleModalSave = () =>{
+        if(modalMode === "add"){
+            setTodos(prev=>[
+                ...prev,{
+                    ...currentTodo,
+                    id:uuidv4(),
+                    date:selectedDate,
+                    completed:false
+                }
+            ]);
+        }else{
+            const updatedTodos = todos.map(todo => 
+            todo.id === currentTodo.id
+                        ? currentTodo
+                        : todo
+        );
+        setTodos(updatedTodos);
+        }
+        setIsModalOpen(false);
+    };
     return (
         <div className="App">
             <h3>選択中の日付：{selectedDate}</h3>
             <h1>やるべきこと</h1><br />
-            <input type="text"
-                    placeholder='タスク検索'
-                    value={searchText}
-                    onChange={(e)=>
-                        setSearchText(e.target.value)
-                    }
-                />
-            <input type='text' className='inputText' ref={todoNameRef} />
-            <button className='Button' onClick={handleAddTodo}>タスクを追加</button>
-            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
     {/* タグ選択欄 */}
+            <h5>タグ選択</h5>
             <select 
                 value={filterTag}
                 onChange={(e)=>setFilterTag(e.target.value)}
@@ -151,16 +166,8 @@ function Todo() {
                     <option value="仕事">仕事</option>
                     <option value="買い物">買い物</option>
                 </select>
-            <select 
-                    value={selectedTag}
-                    onChange={(e)=>setSelectedTag(e.target.value)}
-            >
-                <option value="勉強">勉強</option>
-                <option value="仕事">仕事</option>
-                <option value="買い物">買い物</option>
-                <option value="その他">その他</option>
-            </select>
     {/* セレクトボックス */}
+            <h5>完了</h5>
             <select value={statusFilter}
                     onChange={(e)=>
                         setStatusFilter(e.target.value)
@@ -168,15 +175,75 @@ function Todo() {
                         <option value="すべて">すべて</option>
                         <option value="未完了">未完了</option>
                         <option value="完了済み">完了済み</option>
-                    </select>
+                    </select><br />
+    {isModalOpen && (
+        <div className='modal-overlay'>
+            <div className='modal'>
+                <h3>
+                    {modalMode === "add"
+                            ? "新規タスク"
+                            : "タスク編集"}
+                </h3>
+                <input value={currentTodo.name}
+                        onChange={(e)=>
+                            setCurrentTodo({
+                                ...currentTodo,
+                                name:e.target.value
+                            })
+                        }/>
+                <div className='form-group'>
+                    <label>タグ</label>
+                            <select value={currentTodo.tag}
+                                    onChange={(e)=>
+                                        setCurrentTodo({
+                                            ...currentTodo,
+                                            tag:e.target.value
+                                        })
+                                    }
+                            >
+                    <option value="勉強">勉強</option>
+                    <option value="仕事">仕事</option>
+                    <option value="買い物">買い物</option>
+                    <option value="その他">その他</option>
+                            </select>
+                </div>
     {/* 優先度選択欄 */}
-            <select value={priority}
-                    onChange={(e)=>setPriority(e.target.value)}
-            >
-                <option value="高">高</option>
-                <option value="中">中</option>
-                <option value="低">低</option>
-            </select>
+        <div className='form-group'>
+            <label>優先度</label>
+                    <select value={currentTodo.priority}
+                        onChange={(e)=>
+                            setCurrentTodo({
+                            ...currentTodo,
+                            priority:e.target.value
+                        })
+                        }    
+                    >
+                            <option value="高">高</option>
+                            <option value="中">中</option>
+                            <option value="低">低</option>
+                    </select>
+        </div>
+                <button onClick={handleModalSave}>
+                    保存
+                </button>
+                <button onClick={()=>
+                    setIsModalOpen(false)
+                }>
+                    閉じる
+                </button>
+            </div>
+        </div>
+    )}
+            <input type="text"
+                    placeholder='タスク検索'
+                    value={searchText}
+                    onChange={(e)=>
+                        setSearchText(e.target.value)
+                    }
+                /> <br />
+            <button className='Button' onClick={handleOpenAddModal}>＋タスク追加</button>
+            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
+    
     {/* 検索該当なし */}
             {filteredTodos.length === 0 ?(
                 <p>該当するタスクはありません</p>
@@ -185,6 +252,7 @@ function Todo() {
                 todos={sortedTodos}
                 toggleTodo={toggleTodo}
                 handleEditTodo={handleEditTodo}
+                handleOpenModal={handleOpenModal}
             />
             )}
             <div>
