@@ -41,3 +41,31 @@
   color: gray;
   font-weight: bold;
 }
+
+.modal-overlay{
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal{
+  width: 400px;
+  padding: 20px;
+  background: gray;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.modal label{
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 8px;
+}
+.form-group{
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

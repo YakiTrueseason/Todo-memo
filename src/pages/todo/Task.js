@@ -1,7 +1,7 @@
 import React from 'react'
 import './Todo.css';
 
-function Task({ todo, toggleTodo,handleEditTodo }) {
+function Task({ todo, toggleTodo,handleEditTodo,handleOpenModal }) {
     const handleTodoClick = () => {
         toggleTodo(todo.id);
     }
@@ -33,7 +33,9 @@ function Task({ todo, toggleTodo,handleEditTodo }) {
                 </span>
             </span>
     {/* 編集 */}
-            <button onClick={()=>handleEditTodo(todo.id)}>編集</button>
+            <button onClick={()=>handleOpenModal(todo)}>
+                編集
+            </button>
     {/* 期限切れ */}
             <span>
                 {todo.date < today &&
