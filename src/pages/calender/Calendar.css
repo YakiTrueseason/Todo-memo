@@ -1,20 +1,55 @@
+/* ページ共通 */
+.calendar-page{
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+/* 凡例 */
+.calendar-legend{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 15px 0;
+    align-items: center;
+    /* border: 1px solid blue !important; */
+}
+.calendar-legend span{
+    width: 140px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+.modal-overlay{
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal{
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 300px;
+}
+/* クラス名 */
+.calendar-container{
+    flex-shrink: 0;
+}
 /* カレンダー全体 */
 .react-calendar{
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    /* background: #fff; */
-    font-size: 35px;
-    color: aqua;
-    border: 1px solid black;
-    border-radius: 8px;
-    overflow: hidden;
-    font-family: sans-serif;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    width: 700px;
+    border: 1px solid green !important;
 }
+
 /* タイル */
 .react-calendar__tile{
-    height: 100px;
+    height: 60px;
     color: black;
     /* マスの大きさ変更 */
     border-radius: 100px;
@@ -76,25 +111,19 @@
 .react-calendar__month-view__weekdays__weekday{
     padding: 10px 0;
 }
-/* クラス名 */
-.calendar-container{
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-}
 /* todoのある日付に色を付ける */
 .react-calendar__tile.has-todo{
-    background: #00ffc8 !important;
-    color: burlywood;
+    background: yellow !important;
+    color: green;
 }
 /* memoのある日付に色を付ける */
 .has-memo{
-    background: #00ffc8 !important;
+    background: yellow !important;
     color: black;
 }
 /* どちらもある日付に色を付ける */
 .has-both{
-    background: #00ffc8 !important;
+    background: green !important;
     color: blueviolet;
 }
 /* 期限切れ表示 */
@@ -102,13 +131,7 @@
     background: red !important;
     color: black;
 }
-/* 凡例 */
-.calendar-legend{
-    display: flex;
-    gap: 16px;
-    margin-bottom: 20px;
-    justify-content: center;
-}
+/* 日付の色 */
 .legend-todo,
 .legend-memo,
 .legend-both,
@@ -119,16 +142,16 @@
     border-radius: 6px;
 }
 .legend-todo{
-    background: #00ffc8;
-    color: burlywood;
+    background: yellow;
+    color: green;
 }
 .legend-memo{
-    background: #00ffc8;
+    background: yellow;
     color: black;
 }
 .legend-both{
-    background: #00ffc8;
-    color: blueviolet;
+    background: green;
+    color: purple;
 }
 .legend-expired{
     background: red;

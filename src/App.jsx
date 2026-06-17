@@ -19,12 +19,14 @@ function App() {
     <div className={darkMode ? "app dark" : "app"}>
       <Navbar />
   {/* 移動 */}
-      <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/memo' element={<Memo />}></Route>
-        <Route path='/todo' element={<Todo />}></Route>
-        <Route path='/calendar' element={<Calendar />}></Route>
-      </Routes>
+      <main className='content'>
+        <Routes>
+          <Route path='/' element={<Home />}></Route>
+          <Route path='/memo' element={<Memo />}></Route>
+          <Route path='/todo' element={<Todo />}></Route>
+          <Route path='/calendar' element={<Calendar />}></Route>
+        </Routes>
+      </main>
       </div>
     </>
   );

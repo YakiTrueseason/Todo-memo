@@ -61,9 +61,8 @@ function Memo() {
         <div className="app-container">
             {/* sidebar */}
             <div className='sidebar'>
-                <h3>選択中の日付：{selectedDate}</h3>
+                <h3>選択中の日付： <br /> {selectedDate}</h3>
                 <h1>メモ</h1>
-                <button id='create' onClick={handleNoteAdd}>ノート追加</button>
                 <ul>
                     {notes
                     .filter(
@@ -76,6 +75,7 @@ function Memo() {
                         </li>
                     ))}
                 </ul>
+                    <button id='create' onClick={handleNoteAdd}>ノート追加</button>
             </div>
             {/* main */}
             <div className='main'>

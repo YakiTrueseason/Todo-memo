@@ -17,7 +17,7 @@ body {
 
 /* サイドバーのスタイル */
 .sidebar {
-  background-color: aliceblue;
+  background-color: gray;
   padding: 20px;
   height: 100vh;
   overflow-y: auto;
@@ -115,6 +115,10 @@ button {
 
 #create {
   background-color: #3498bd;
+  color: black;
+}
+
+.dark #create{
   color: white;
 }
 
