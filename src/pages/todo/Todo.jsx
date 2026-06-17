@@ -155,20 +155,29 @@ function Todo() {
         <div className="App">
             <h3>選択中の日付：{selectedDate}</h3>
             <h1>やるべきこと</h1><br />
+            <div className='rest'>
+                残りのタスク:{todos.filter((todo) =>
+                    todo.date === selectedDate &&
+                    !todo.completed
+                    ).length
+                    }
+            </div>
     {/* タグ選択欄 */}
-            <h5>タグ選択</h5>
-            <select 
-                value={filterTag}
-                onChange={(e)=>setFilterTag(e.target.value)}
-                >
-                    <option value="すべて">すべて</option>
-                    <option value="勉強">勉強</option>
-                    <option value="仕事">仕事</option>
-                    <option value="買い物">買い物</option>
-                </select>
+            <div className='tag-filter'>
+                <h5>タグ選択</h5>
+                <select
+                    value={filterTag}
+                    onChange={(e)=>setFilterTag(e.target.value)}
+                    >
+                        <option value="すべて">すべて</option>
+                        <option value="勉強">勉強</option>
+                        <option value="仕事">仕事</option>
+                        <option value="買い物">買い物</option>
+                    </select>
     {/* セレクトボックス */}
             <h5>完了</h5>
-            <select value={statusFilter}
+            <select 
+                    value={statusFilter}
                     onChange={(e)=>
                         setStatusFilter(e.target.value)
                     }>
@@ -176,6 +185,7 @@ function Todo() {
                         <option value="未完了">未完了</option>
                         <option value="完了済み">完了済み</option>
                     </select><br />
+                </div>
     {isModalOpen && (
         <div className='modal-overlay'>
             <div className='modal'>
@@ -234,16 +244,16 @@ function Todo() {
             </div>
         </div>
     )}
-            <input type="text"
+    {/* 検索 */}
+            <input 
+                    className='search'
+                    type="text"
                     placeholder='タスク検索'
                     value={searchText}
                     onChange={(e)=>
                         setSearchText(e.target.value)
                     }
-                /> <br />
-            <button className='Button' onClick={handleOpenAddModal}>＋タスク追加</button>
-            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
-    
+                /> <br />    
     {/* 検索該当なし */}
             {filteredTodos.length === 0 ?(
                 <p>該当するタスクはありません</p>
@@ -255,13 +265,8 @@ function Todo() {
                 handleOpenModal={handleOpenModal}
             />
             )}
-            <div>
-                残りのタスク:{todos.filter((todo) =>
-                    todo.date === selectedDate &&
-                    !todo.completed
-                    ).length
-                    }
-            </div>
+            <button className='Button' onClick={handleOpenAddModal}>＋タスク追加</button>
+            <button className='Button' onClick={handleClear}>完了したタスクの削除</button><br />
         </div>
     );
 }

@@ -13,10 +13,18 @@ code {
 }
 /* 通常 */
 .app{
+  display: flex;
+  justify-content: center;
   background: white;
   color: black;
   min-height: 100vh;
   --card-bg:white;
+}
+.content{
+  flex: 1;
+  padding: 20px;
+  max-width: 1400px;
+  width: 100%;
 }
 /* ダークモード */
 .dark{
