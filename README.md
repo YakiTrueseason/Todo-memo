@@ -52,6 +52,7 @@ Todo管理とメモ管理・カレンダー表示を1つにまとめたwebアプ
 - JavaScript(ES6+)
 - CSS3
 - LocalStorage
+-SQLite
 
 ## 工夫した点
 ・　カレンダーとTodoを連携させた
