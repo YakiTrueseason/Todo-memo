@@ -2,6 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import './Todo.css';
 import TodoList from './TodoList';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
+// import API_BASE_URL from '../../api/api';
+import { addTodo, deleteTodo, updateTodo } from '../../api/todoApi';
 
 function Todo() {
 
@@ -19,32 +21,14 @@ function Todo() {
     const [statusFilter,setStatusFilter] = useState("すべて");
 
     // Todo追加
-    const addTodo = async(todo)=>{
-        await fetch("https://todo-memo-api.onrender.com/todos",{
-            method:"POST",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(todo)
-        });
-        loadTodos();
-    };
+
     
     useEffect(()=>{
         loadTodos();
-    });
+    },[loadTodos]);
 
     //Todo編集
-    const updateTodo = async(todo)=>{
-        await fetch(`https://todo-memo-api.onrender.com/todos/${todo.id}`,{
-            method:"PUT",
-            headers:{
-                "Content-Type":"application/json"
-            },
-            body:JSON.stringify(todo)
-        });
-        loadTodos();
-    }
+
     // 切り替え
     const toggleTodo = async(id) => {
         const todo = todos.find(
@@ -54,18 +38,11 @@ function Todo() {
         ...todo,
         completed:!todo.completed
     });
+    await loadTodos();
     };
 
     //Todo削除
-    const deleteTodo = async(id)=>{
-        await fetch(
-            `https://todo-memo-api.onrender.com/todos/${id}`,
-            {
-                method:"DELETE"
-            }
-        );
-        loadTodos();
-    }
+
 
     const handleClear = async() => {
         const completedTodos = todos.filter(todo=>todo.completed);
@@ -168,6 +145,7 @@ function Todo() {
         }else{
             await updateTodo(currentTodo);
         }
+        await loadTodos();
         setIsModalOpen(false);
     };
     return (
