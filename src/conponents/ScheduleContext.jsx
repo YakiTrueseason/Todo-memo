@@ -1,8 +1,9 @@
 //現在の選択中の日付一覧をまとめて保存
 
 import React, { createContext, useEffect, useState } from 'react'
-import API_BASE_URL from '../api/api';
+// import API_BASE_URL from '../api/api';
 import { getTodos } from '../api/todoApi';
+import { getNotes } from '../api/noteApi';
 
 export const ScheduleContext = createContext();
 
@@ -32,8 +33,7 @@ export function ScheduleProvider({children}){
     };
 
     const loadNotes = async()=>{
-        const response = await fetch(`${API_BASE_URL}/notes`);
-        const data = await response.json();
+        const data = await getNotes();
         setNotes(data);
     }
 

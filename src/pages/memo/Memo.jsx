@@ -1,7 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Memo.css';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
-import API_BASE_URL from '../../api/api';
+// import API_BASE_URL from '../../api/api';
+
+import{
+        addNote,
+        updateNote,
+        deleteNote
+    }from "../../api/noteApi";
 
 function Memo() {
     //読み込み　起動
@@ -15,48 +21,10 @@ function Memo() {
     const [selectedNote, setSelectedNote] = useState(null);
     const [editedText, setEditedText] = useState("");
 
-    //メモ取得
-    const addNote = async(note)=>{
-        await fetch(`${API_BASE_URL}/notes`,
-            {
-                method:"POST",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify(note)
-            }
-        );
-        loadNotes();
-    }
-
-    //メモ編集
-    const updateNote = async(note)=>{
-        await fetch(`${API_BASE_URL}/notes/${note.id}`,
-            {
-                method:"PUT",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body:JSON.stringify(note)
-            }
-        );
-        loadNotes();
-    }
-
-    //メモ削除
-    const deleteNote = async(id)=>{
-        await fetch(`${API_BASE_URL}/notes/${id}`,
-            {
-                method:"DELETE",
-            }
-        );
-        loadNotes();
-    }
-
     // 初回読み込み
     useEffect(()=>{
     loadNotes();
-    })
+    },[loadNotes])
 
     const handleNoteAdd = async() => {
         // 新しいオブジェクトの追加
@@ -66,7 +34,9 @@ function Memo() {
             text: "新規ノート📝"
         };
         await addNote(newNote);
+        await loadNotes();
     };
+    
     const handleSelect = (note) => {
         setSelectedNote(note);
         setEditedText(note.text);
@@ -79,6 +49,7 @@ function Memo() {
     const handleChange = (e) => {
         setEditedText(e.target.value);
     }
+
     const handleSave = async() => {
         await updateNote({
             ...selectedNote,

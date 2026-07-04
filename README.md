@@ -6,6 +6,11 @@ Todo管理とメモ管理・カレンダー表示を1つにまとめたwebアプ
 日付ごとにtodo・メモを登録出来てカレンダー上で確認可能です。
 優先度やタグによる分類、期限切れタスクの管理にも対応しています。
 
+## デモ
+・　Frontend:Vercel
+・  Backend:Render
+URL:https://todo-memo-mu.vercel.app/
+
 ##　主な機能
 
     Todo管理
@@ -46,13 +51,27 @@ Todo管理とメモ管理・カレンダー表示を1つにまとめたwebアプ
 ・　レスポンシブ対応（PC・スマホ）
 
 ## 使用技術
+    Frontend
 - React
 - React Router
 - React Context API
 - JavaScript(ES6+)
 - CSS3
-- LocalStorage
--SQLite
+    Backend
+- Node.js
+- Express
+    Database
+- SQLite
+    Deploy
+- Vercel
+- Rendar
+
+##　アプリ構成
+React
+    ↓
+Express
+    ↓
+SQLite
 
 ## 工夫した点
 ・　カレンダーとTodoを連携させた
@@ -60,9 +79,13 @@ Todo管理とメモ管理・カレンダー表示を1つにまとめたwebアプ
 ・　ダッシュボードでタスク状況を可視化した
 ・　ダークモード対応を行った
 ・　スマホでも利用可能にする為レスポンシブ対応した 
+・　APIを分離し、保守しやすい構成にリファクタリングした
 
 ## 苦労した点
-・　
+・  Todoとメモアプリの統合をした
+・  誰でもが使いやすいように工夫した
+・　LocalStrageからSQLite移行する際、データ取得方法や状態管理を見直した。
+・  API処理を分離し、役割ごとに責務を整理した
 
 ##　今後追加予定
 ・　優先度分析機能追加
@@ -71,9 +94,15 @@ Todo管理とメモ管理・カレンダー表示を1つにまとめたwebアプ
 ・　データバックアップ機能
 
 ## 起動方法
+cd Todo-memo
+npm install
+    Frontend
+npm start
+    Backend
+cd server
 npm install
 npm start
 
 ## 制作目的
 
-ITの学習を目的に制作しました。状態管理、ルーティング、カレンダー連携、レスポンシブデザインの理解を深める為、開発しました。
+ITの学習を目的に制作しました。Reactを用いたフロントエンド開発やExpressを利用したバックエンド開発、API、状態管理、デプロイまでの一連の流れを経験し、私生活でも使えるものを想定し制作しました。
