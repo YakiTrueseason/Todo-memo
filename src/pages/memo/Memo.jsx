@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import './Memo.css';
 import { ScheduleContext } from '../../conponents/ScheduleContext';
+import API_BASE_URL from '../../api/api';
 
 function Memo() {
     //読み込み　起動
@@ -16,7 +17,7 @@ function Memo() {
 
     //メモ取得
     const addNote = async(note)=>{
-        await fetch("https://todo-memo-api.onrender.com/notes",
+        await fetch(`${API_BASE_URL}/notes`,
             {
                 method:"POST",
                 headers:{
@@ -30,7 +31,7 @@ function Memo() {
 
     //メモ編集
     const updateNote = async(note)=>{
-        await fetch(`https://todo-memo-api.onrender.com/notes/${note.id}`,
+        await fetch(`${API_BASE_URL}/notes/${note.id}`,
             {
                 method:"PUT",
                 headers:{
@@ -44,7 +45,7 @@ function Memo() {
 
     //メモ削除
     const deleteNote = async(id)=>{
-        await fetch(`https://todo-memo-api.onrender.com/notes/${id}`,
+        await fetch(`${API_BASE_URL}/notes/${id}`,
             {
                 method:"DELETE",
             }

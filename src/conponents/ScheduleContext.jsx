@@ -1,6 +1,8 @@
 //現在の選択中の日付一覧をまとめて保存
 
 import React, { createContext, useEffect, useState } from 'react'
+import API_BASE_URL from '../api/api';
+import { getTodos } from '../api/todoApi';
 
 export const ScheduleContext = createContext();
 
@@ -25,13 +27,12 @@ export function ScheduleProvider({children}){
     const[notes,setNotes]= useState([]);
 
     const loadTodos = async()=>{
-        const Response = await fetch("https://todo-memo-api.onrender.com/todos");
-        const data = await Response.json();
+        const data = await getTodos();
         setTodos(data);
     };
 
     const loadNotes = async()=>{
-        const response = await fetch("https://todo-memo-api.onrender.com/notes");
+        const response = await fetch(`${API_BASE_URL}/notes`);
         const data = await response.json();
         setNotes(data);
     }
