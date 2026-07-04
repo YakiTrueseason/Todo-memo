@@ -52,7 +52,7 @@ export async function updateTodo(todo){
         }
         return await response.json();
 }
-
+    //Todo削除
 export async function deleteTodo(id){
         const response = await fetch(
             `${API_BASE_URL}/todos/${id}`,
