@@ -58,7 +58,6 @@
     gap: 10px;
     margin: 15px 0;
     align-items: center;
-    /* border: 1px solid blue !important; */
 }
 .calendar-legend span{
     width: 140px;
@@ -78,12 +77,12 @@
     z-index: 1000;
 }
 .modal{
-    background:gray;
+    background:#8ad0ff;
     padding: 20px;
     border-radius: 10px;
     min-width: 300px;
+    text-align: center;
 }
-
 
 /* タイル */
 .react-calendar__tile{
@@ -108,8 +107,16 @@
     background-color: blue;
     color: white;
 }
+.dark .react-calendar__tile--now{
+    background-color: blue;
+    color: white;
+}
 /* 選択中の日付 */
 .react-calendar__tile--active{
+    background-color: orange;
+    color: white;
+}
+.dark .react-calendar__tile--active{
     background-color: orange;
     color: white;
 }
@@ -117,13 +124,23 @@
 .react-calendar__tile:hover{
     background-color: aqua;
 }
+.dark .react-calendar__tile:hover{
+    background-color: aqua;
+}
 /* ほかの月 */
 .react-calendar__month-view__days__day--neighboringMonth{
     color: #000;
     background: gray;
 }
+.dark .react-calendar__month-view__days__day--neighboringMonth{
+    color: #000;
+    background: gray;
+}
 /* 土日曜日 */
 .react-calendar__month-view__days__day--weekend{
+    color: red;
+}
+.dark .react-calendar__month-view__days__day--weekend{
     color: red;
 }
 /* ヘッダー*/
@@ -152,17 +169,17 @@
 /* todoのある日付に色を付ける */
 .react-calendar__tile.has-todo{
     background: yellow !important;
-    color: green;
+    color: black;
 }
 /* memoのある日付に色を付ける */
 .has-memo{
-    background: yellow !important;
+    background: pink !important;
     color: black;
 }
 /* どちらもある日付に色を付ける */
 .has-both{
     background: green !important;
-    color: blueviolet;
+    color: white;
 }
 /* 期限切れ表示 */
 .has-expired{
@@ -181,15 +198,15 @@
 }
 .legend-todo{
     background: yellow;
-    color: green;
+    color: black;
 }
 .legend-memo{
-    background: yellow;
+    background: pink;
     color: black;
 }
 .legend-both{
     background: green;
-    color: purple;
+    color: white;
 }
 .legend-expired{
     background: red;
