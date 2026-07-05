@@ -58,11 +58,15 @@ function Memo() {
         await loadNotes();
     }
     return (
+        <>
+        <div className='page-header'>
+            <h1>メモ</h1>
+            <h3>選択日：{selectedDate}</h3>
+        </div>
         <div className="app-container">
             {/* sidebar */}
             <div className='sidebar'>
-                <h1>メモ</h1>
-                <h3>選択中の日付： <br /> {selectedDate}</h3>
+                    <button id='create' onClick={handleNoteAdd}>ノート追加</button>
                 <ul>
                     {notes
                     .filter(
@@ -75,7 +79,6 @@ function Memo() {
                         </li>
                     ))}
                 </ul>
-                    <button id='create' onClick={handleNoteAdd}>ノート追加</button>
             </div>
             {/* main */}
             <div className='main'>
@@ -92,6 +95,7 @@ function Memo() {
                 )}
             </div>
         </div>
+        </>
     );
 }
 
