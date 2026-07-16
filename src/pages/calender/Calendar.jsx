@@ -116,13 +116,13 @@ return (
                     return(
                         <div className='tile-info'>
                             {todoCount > 0 &&(
-                        <div>✓{todoCount}</div>
+                        <div>📋{todoCount}</div>
                         )}
                             {memoCount > 0 &&(
                         <div>📝{memoCount}</div>
                         )}
                             {hasExpiredTodo &&(
-                                <div>🔥</div>
+                                <div>⚠️</div>
                             )}
                         </div>
                     );
